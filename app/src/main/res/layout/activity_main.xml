@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.elias.rememberlist.MainActivity">
+
+    <TableLayout
+        android:id="@+id/table_layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:weightSum="1.0"
+            >
+            <EditText
+                android:id="@+id/item_Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:hint="Grossery name">
+            </EditText>
+            <EditText
+                android:id="@+id/item_sum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:inputType="phone"
+                android:hint="sum">
+            </EditText>
+
+        </TableRow>
+        <TableRow
+            android:weightSum="1.0"
+            >
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="#009900"
+                android:layout_marginRight="1dp"
+                android:text="@string/add_btn"/>
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="#B33A3A"
+                android:text="@string/delete_btn"/>
+
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/linar_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/table_layout_top"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/liniar_bot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:background="#B33A3A"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/clear_btn"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
