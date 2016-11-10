@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.support.design.widget.Snackbar;
 
 
 import java.util.ArrayList;
@@ -20,9 +22,12 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
     ArrayList<Product> items = new ArrayList<>();
     ArrayAdapter<Product> adapter;
     ListView listView;
-    private static final String TAG = "com.example.StateChange";
+    private static final String TAG = "com.example.elias.rememberlist";
     private int itemIndex = -1;
     static ConfirmDeleteDialog dialog;
+    Product lastDeletedProduct;
+    int lastDeletedPosition;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,33 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
         //try to comment the line below out and
         //see the effect after orientation change (after saving some name)
         setAdapter(this.items);
+    }
+
+    public void showSnackbar(){
+        final View parent = listView;
+        Snackbar snackbar = Snackbar
+                .make(parent, "Product deleted!", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //This code will ONLY be executed in case that
+                        //the user has hit the UNDO button
+                        items.add(lastDeletedPosition, lastDeletedProduct);
+                        getMyAdapter().notifyDataSetChanged();
+                        Snackbar snackbar = Snackbar.make(parent, "Product not deleted!", Snackbar.LENGTH_SHORT);
+                        //Show the user we have restored the name - but here
+                        //on this snackbar there is NO UNDO - so no SetAction method is called
+                        //if you wanted, you could include a REDO on the second action button
+                        //for instance.
+                        snackbar.show();
+                    }
+                });
+        snackbar.show();
+    }
+
+    public void saveCopy(){
+        lastDeletedPosition = listView.getCheckedItemPosition();
+        lastDeletedProduct = items.get(lastDeletedPosition);
     }
 
 
@@ -141,9 +173,11 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                items.remove(itemIndex);
+                saveCopy();
+                items.remove(lastDeletedProduct);
                 getMyAdapter().notifyDataSetChanged();
                 itemIndex = -1;
+                showSnackbar();
             }
         });
     }
