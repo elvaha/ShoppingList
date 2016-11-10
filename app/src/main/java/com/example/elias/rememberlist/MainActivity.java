@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.support.design.widget.Snackbar;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -74,6 +77,45 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
         //try to comment the line below out and
         //see the effect after orientation change (after saving some name)
         setAdapter(this.items);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //We we set that we want to use the xml file
+        //under the menu directory in the resources and
+        // that we want to use the specific file called "main.xml"
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                Toast.makeText(this, "Application icon clicked!",
+                        Toast.LENGTH_SHORT).show();
+                return true; //return true, means we have handled the event
+            case R.id.item_about:
+                Toast.makeText(this, "About item clicked!", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+            case R.id.item_delete:
+                Toast.makeText(this, "Delete item clicked!", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+            case R.id.item_help:
+                Toast.makeText(this, "Help item clicked!", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+            case R.id.item_refresh:
+                Toast.makeText(this, "Refresh item clicked!", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+        }
+
+        return false; //we did not handle the event
     }
 
     public void showSnackbar(){
