@@ -60,7 +60,7 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
         Log.i(TAG, "onSaveInstanceState");
 		/* Here we put code now to save the state */
         outState.putParcelableArrayList("savedList", items);
-        
+
     }
 
     //this is called when our activity is recreated, but
