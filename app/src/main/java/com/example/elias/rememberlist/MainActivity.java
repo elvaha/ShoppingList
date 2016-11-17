@@ -2,7 +2,6 @@ package com.example.elias.rememberlist;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,9 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.support.design.widget.Snackbar;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import com.example.elias.rememberlist.Module.Product;
 
 
 import java.util.ArrayList;
@@ -23,13 +27,15 @@ import java.util.List;
 public class MainActivity extends Activity implements ConfirmDeleteDialogFragment.OnPositiveListener {
 
     ArrayList<Product> items = new ArrayList<>();
-    ArrayAdapter<Product> adapter;
+//    ArrayAdapter<Product> adapter;
     ListView listView;
     private static final String TAG = "com.example.elias.rememberlist";
     private int itemIndex = -1;
     static ConfirmDeleteDialog dialog;
     Product lastDeletedProduct;
     int lastDeletedPosition;
+    DatabaseReference firebase;
+    FirebaseListAdapter mAdapter;
 
 
     @Override
@@ -37,7 +43,8 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setAdapter(items);
+        firebase = FirebaseDatabase.getInstance().getReference().child("Items");
+        setAdapter();
         buttonAddClick();
         btnClearClick();
         onItemClickListener();
@@ -53,7 +60,7 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
         Log.i(TAG, "onSaveInstanceState");
 		/* Here we put code now to save the state */
         outState.putParcelableArrayList("savedList", items);
-
+        
     }
 
     //this is called when our activity is recreated, but
@@ -76,7 +83,7 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
         //we need to set the text field
         //try to comment the line below out and
         //see the effect after orientation change (after saving some name)
-        setAdapter(this.items);
+        setAdapter();
     }
 
     @Override
@@ -146,18 +153,22 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
     }
 
 
-    public void setAdapter(List<Product> shopList){
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, shopList);
+    public void setAdapter(){
+        mAdapter = new FirebaseListAdapter<Product>(this, Product.class, android.R.layout.simple_list_item_checked, firebase) {
+            @Override
+            protected void populateView(View view, Product product, int position) {
+                ((TextView)view.findViewById(android.R.id.text1)).setText(product.toString());
+            }
+        };
 
         listView = (ListView) findViewById(R.id.list_view);
+        listView.setAdapter(mAdapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
-        listView.setAdapter(adapter);
     }
 
-    public ArrayAdapter getMyAdapter()
+    public FirebaseListAdapter getMyAdapter()
     {
-        return adapter;
+        return mAdapter;
     }
 
     protected void buttonAddClick(){
@@ -172,7 +183,8 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
                 int itemQuant = Integer.parseInt(itemQuantity.getText().toString());
                 Product product = new Product(itemName, itemQuant);
 
-                items.add(product);
+//                items.add(product);
+                firebase.push().setValue(product);
                 //The next line is needed in order to say to the ListView
                 //that the data has changed - we have added stuff now!
                 getMyAdapter().notifyDataSetChanged();
@@ -226,7 +238,7 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
 
     @Override
     public void onPositiveClicked() {
-        getMyAdapter().clear();
+        getMyAdapter().cleanup();
         itemIndex = -1;
     }
 

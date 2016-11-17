@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "19861959869",
+    "firebase_url": "https://shoppinglist-c0524.firebaseio.com",
+    "project_id": "shoppinglist-c0524",
+    "storage_bucket": "shoppinglist-c0524.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19861959869:android:e2e72d054293edd8",
+        "android_client_info": {
+          "package_name": "com.example.elias.rememberlist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19861959869-lc96jru7sqicah44agn90u8hh8866o9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA__8EIKxC9frCgp5U_mX_0_q36xoEHlgU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

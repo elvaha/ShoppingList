@@ -1,4 +1,4 @@
-package com.example.elias.rememberlist;
+package com.example.elias.rememberlist.Module;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -19,6 +19,26 @@ public class Product implements Parcelable {
 
     public Product(String name, int quantity){
         this.name = name;
+        this.quantity = quantity;
+    }
+
+    public Product(){
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
