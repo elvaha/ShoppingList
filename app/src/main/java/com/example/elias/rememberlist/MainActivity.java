@@ -196,7 +196,6 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
 
     protected void btnClearClick(){
         Button clearBtn = (Button) findViewById(R.id.btn_clear);
-
         clearBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
