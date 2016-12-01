@@ -36,6 +36,7 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
     int lastDeletedPosition;
     DatabaseReference firebase;
     FirebaseListAdapter mAdapter;
+    String token = "";
 
 
     @Override
@@ -44,6 +45,8 @@ public class MainActivity extends Activity implements ConfirmDeleteDialogFragmen
         setContentView(R.layout.activity_main);
 
         firebase = FirebaseDatabase.getInstance().getReference().child("Items");
+        getActionBar().setHomeButtonEnabled(true);
+
         setAdapter();
         buttonAddClick();
         btnClearClick();
